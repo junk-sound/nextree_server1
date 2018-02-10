@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from rest_framework_jwt.views import obtain_jwt_token
-from rest_framework.schemas import get_schema_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -28,7 +28,6 @@ urlpatterns = [
     path('post/',include('post.urls')),
 
     path('api/auth/token/', obtain_jwt_token),
-    path('api/', get_schema_view()),
 ]
 
 
