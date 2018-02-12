@@ -24,7 +24,7 @@ SECRET_KEY = 'j@8ap9yeb#nm-(4aiu!rz(4*vq*f^!f9@(=b4zr5fa*2btejq5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['13.125.173.238']
 
 
 # Application definition
@@ -80,11 +80,13 @@ WSGI_APPLICATION = 'nextree_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'junkdb',
+        'USER': 'junksound',
+        'PASSWORD': 'wekimeki',
+        'HOST': 'localhost',
+        },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -123,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 

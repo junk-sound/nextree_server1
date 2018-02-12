@@ -1,8 +1,8 @@
 import os
 from .common import *
 
-DEBUG = False
-ALLOWED_HOSTS = ['\*']
+DEBUG = True
+ALLOWED_HOSTS = ['13.125.173.238']
 
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "staticfiles")
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media")
@@ -13,5 +13,6 @@ DATABASES = {
         'NAME': 'junkdb',
         'USER': 'junksound',
         'PASSWORD': 'wekimeki',
-        'HOST': '127.0.0.1', },
+        'HOST': 'localhost',
+	},
 }
