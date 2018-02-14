@@ -1,8 +1,10 @@
 from rest_framework.serializers import (ModelSerializer,
                                         CharField,
                                         ValidationError,)
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from account.models import User
 from django.db.models import Q
+
 
 class UserDetailSerializer(ModelSerializer):
     class Meta:
@@ -45,27 +47,29 @@ class UserCreateSerializer(ModelSerializer):
         return data
 
 class UserLoginSerializer(ModelSerializer):
-    token = CharField(read_only=True,allow_blank=True)
     username = CharField(required=False, allow_blank=True)
     class Meta:
         model = User
         fields = [
             'username',
             'password',
-            'token',
         ]
 
     extra_kwargs = {"password":
                         {"write_only": True}
                     }
     def validate(self, data):
+        print('data')
+        print(data)
         user_obj = None
         username = data.get("username", None)
         password = data['password']
+        if not username:
+            raise ValidationError("A username is required to login")
+
         user = User.objects.filter(
             Q(username = username)
         ).distinct()
-        print(user)
         # user = user.exclude(email__isnull=True).exclude(email__iexact=='')
         if user.exists() and user.count() ==1:
             user_obj = user.first()
@@ -73,12 +77,10 @@ class UserLoginSerializer(ModelSerializer):
             raise ValidationError('This username is not valid')
         if user_obj:
             if not user_obj.check_password(password):
-                raise ValidationError("incorect credential pls try again")
-
-        data['token'] = "SOME RANDOM TOKEN"
+                raise ValidationError("incorect password pls try again")
+        return data
 
         # email = data['email']
         # user_qs = User.objects.filter(email=email)
         # if user_qs.exists():
         #     raise ValidationError("This user has already registered.")
-        return data

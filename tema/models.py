@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from account.models import User
 from topic.models import Topic
 from django.utils.text import slugify
 # Create your models here.
