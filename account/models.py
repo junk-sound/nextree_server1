@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin
+    AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 )
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser,PermissionsMixin):
     username = models.CharField(db_index=True, max_length=20, unique=True)
     fullname = models.CharField(max_length=10)
-    th = models.IntegerField(null=True, blank=True)
+    th = models.IntegerField()
     email = models.EmailField(db_index=True, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
