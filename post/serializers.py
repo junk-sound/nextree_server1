@@ -68,9 +68,6 @@ class PostTemaSerializer(ModelSerializer):
     def get_user(self, obj):
         return str(obj.user.username)
 
-
-
-
 class PostCreateUpdateSerializer(ModelSerializer):
     class Meta:
         model = Post

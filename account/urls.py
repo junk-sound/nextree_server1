@@ -4,6 +4,7 @@ from account.views import (
     UserLoginAPIView,
     UserListAPIView,
     UserUpdateAPIView,
+    UserDeleteAPIView
 )
 app_name = 'account'
 urlpatterns = [
@@ -15,4 +16,6 @@ urlpatterns = [
     path('update/<str:email>/', UserUpdateAPIView.as_view(), name = 'update'),
     # example url: /account/login/
     path('login/', UserLoginAPIView.as_view(), name = 'login'),
+    # example url: /account/delete/<email>/
+    path('delete/<str:email>/', UserDeleteAPIView.as_view(), name = 'delete')
 ]

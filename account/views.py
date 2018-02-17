@@ -3,6 +3,7 @@ from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
     RetrieveUpdateAPIView,
+    DestroyAPIView,
 )
 from rest_framework.views import APIView
 # from django.contrib.auth.models import User
@@ -10,7 +11,8 @@ from account.models import User
 from account.serializers import (UserDetailSerializer,
                                  UserCreateSerializer,
                                  UserLoginSerializer,
-                                 UserUpdateSerializer)
+                                 UserUpdateSerializer,
+                                 UserDeleteSerializer,)
 
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -23,35 +25,19 @@ class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
 
-
-
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
     queryset = User.objects.all()
 
 class UserUpdateAPIView(RetrieveUpdateAPIView):
-    # queryset = User.objects.all()
     serializer_class = UserUpdateSerializer
     lookup_field = "email"
     def get_object(self):
         email = self.kwargs["email"]
-        print('tttttt')
         return get_object_or_404(User, email=email)
 
     def put(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
-
-    # def update(self, request, *args, **kwargs):
-    #     serializer_data = request.data
-    #     print('dddd')
-    #     print(serializer_data)
-    #     serializer = self.serializer_class(
-    #         request.user, data=serializer_data, partial=True
-    #     )
-    #     serializer.is_valid(raise_exception=True)
-    #
-    #
-    #     return Response(serializer.data, status=HTTP_200_OK)
 
 class UserLoginAPIView(APIView):
     serializer_class = UserLoginSerializer
@@ -83,3 +69,7 @@ class UserLoginAPIView(APIView):
                 return Response(response_data, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
+class UserDeleteAPIView(DestroyAPIView):
+    lookup_field = 'email'
+    queryset = User.objects.all()
+    serializer_class = UserDeleteSerializer

@@ -147,7 +147,6 @@ class UserUpdateSerializer(ModelSerializer):
             raise ValidationError("new password must match")
         return value
 
-
 class UserLoginSerializer(ModelSerializer):
     email = CharField(required=False, allow_blank=True)
     class Meta:
@@ -182,4 +181,9 @@ class UserLoginSerializer(ModelSerializer):
                 raise ValidationError("incorrect password please try again")
         return data
 
-
+class UserDeleteSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'email',
+        ]

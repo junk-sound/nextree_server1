@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin, User
+    AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
