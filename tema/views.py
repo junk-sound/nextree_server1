@@ -14,6 +14,14 @@ from tema.serializers import (
     TemaDetailSerializer
 )
 
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+)
+from tema.permissions import IsOwnerOrReadOnly
+
 # Create your views here.
 
 '''CREATE VIEW'''
@@ -22,6 +30,7 @@ from tema.serializers import (
 class TemaCreateAPIView(CreateAPIView):
     # queryset = Tema.objects.all()
     serializer_class = TemaCreateSerializer
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         print('checking now1')
@@ -53,6 +62,7 @@ class TemaUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Tema.objects.all()
     serializer_class = TemaUpdateSerializer
     lookup_field = 'slug'
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
@@ -65,3 +75,4 @@ class TemaDeleteAPIView(DestroyAPIView):
     queryset = Tema.objects.all()
     serializer_class = TemaDetailSerializer
     lookup_field = 'slug'
+    permission_classes = [IsOwnerOrReadOnly]

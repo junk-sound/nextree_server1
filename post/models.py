@@ -9,12 +9,12 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')
-    title = models.CharField('TITLE', max_length=100)
+    title = models.CharField('TITLE', max_length=80)
     url = models.URLField('url')
     description = models.CharField('DESCRIPTION',max_length=200, help_text='simple description text')
-    content = models.TextField('CONTENT')
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
+    published_date = models.DateField(auto_now=False, auto_now_add=False, null=True, default=None)
     # tag = tag
     # is_read = is_read
 

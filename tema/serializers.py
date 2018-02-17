@@ -70,7 +70,6 @@ class TemaCreateSerializer(ModelSerializer):
 
 
 class TemaListSerializer(ModelSerializer):
-    topic = SerializerMethodField()
     detail_url = HyperlinkedIdentityField(
         view_name='tema:detail',
         lookup_field='slug'
@@ -79,14 +78,10 @@ class TemaListSerializer(ModelSerializer):
     class Meta:
         model = Tema
         fields = [
-            'topic',
             'tema_name',
-            'order_num',
+            # 'order_num',
             'detail_url',
         ]
-
-    def get_topic(self,obj):
-        return(obj.topic.topic_name)
 
 
 
@@ -94,30 +89,31 @@ class TemaListSerializer(ModelSerializer):
 
 
 class TemaDetailSerializer(ModelSerializer):
-    topic = SerializerMethodField()
     user = SerializerMethodField()
     post_list = SerializerMethodField()
+    post_count = SerializerMethodField()
     class Meta:
         model = Tema
         fields = [
-            'topic',
             'tema_name',
-            'order_num',
+            # 'order_num',
             'user',
             'create_date',
             'modify_date',
             'post_list',
+            'post_count',
         ]
-    def get_topic(self, obj):
-        return (obj.topic.topic_name)
-
 
     def get_post_list(self, obj):
         return PostTemaSerializer(obj.post_set.all().order_by('-modify_date'), many=True).data
 
     def get_user(self, obj):
         # 여기서 obj는 tema object1, tema object2 다 나옴.
-        return str(obj.user.username)
+        return obj.user.fullname
+
+    def get_post_count(self, obj):
+        return obj.post_set.count()
+
 
 
 '''UPDATE SERIALIZER'''
@@ -135,8 +131,13 @@ class TemaUpdateSerializer(ModelSerializer):
 
 
 class TemaTopicSerializer(ModelSerializer):
+    post_count = SerializerMethodField()
     class Meta:
         model = Tema
         fields = [
             'tema_name',
+            'modify_date',
+            'post_count'
         ]
+    def get_post_count(self, obj):
+        return obj.post_set.count()

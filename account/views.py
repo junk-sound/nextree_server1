@@ -18,12 +18,20 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth import authenticate
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+)
+from account.permissions import IsOwnerOrReadOnly
 
 # Create your views here.
 
 class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
+    permission_classes = [IsAdminUser]
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
@@ -32,6 +40,7 @@ class UserCreateAPIView(CreateAPIView):
 class UserUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = UserUpdateSerializer
     lookup_field = "email"
+    permission_classes = [IsOwnerOrReadOnly]
     def get_object(self):
         email = self.kwargs["email"]
         return get_object_or_404(User, email=email)
@@ -73,3 +82,4 @@ class UserDeleteAPIView(DestroyAPIView):
     lookup_field = 'email'
     queryset = User.objects.all()
     serializer_class = UserDeleteSerializer
+    permission_classes = [IsOwnerOrReadOnly]

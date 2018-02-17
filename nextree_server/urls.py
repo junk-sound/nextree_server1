@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('account/', include('account.urls')),
 
+    path('category/', include('category.urls')),
     path('topic/',include('topic.urls')),
     path('tema/',include('tema.urls')),
     path('post/',include('post.urls')),

@@ -2,7 +2,8 @@ from post.models import Post
 from rest_framework.serializers import (
     ModelSerializer,
     SerializerMethodField,
-    HyperlinkedIdentityField
+    HyperlinkedIdentityField,
+    CharField,
 )
 
 class PostListSerializer(ModelSerializer):
@@ -20,7 +21,6 @@ class PostListSerializer(ModelSerializer):
             'user',
             'description',
             'url',
-            'content',
             'create_date',
             'modify_date',
             'detail_url',
@@ -64,11 +64,13 @@ class PostTemaSerializer(ModelSerializer):
             'url',
             'create_date',
             'modify_date',
+            'published_date',
         ]
     def get_user(self, obj):
-        return str(obj.user.username)
+        return 'N'+str(obj.user.th)+' '+obj.user.fullname
 
 class PostCreateUpdateSerializer(ModelSerializer):
+    tema = CharField()
     class Meta:
         model = Post
         fields = [
@@ -76,6 +78,7 @@ class PostCreateUpdateSerializer(ModelSerializer):
             'title',
             'url',
             'description',
-            'content',
+            'published_date',
+
         ]
 

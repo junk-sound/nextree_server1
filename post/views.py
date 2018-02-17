@@ -12,7 +12,15 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     DestroyAPIView,
 )
-
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+)
+from post.permissions import IsOwnerOrReadOnly
+from tema.models import Tema
+from rest_framework.exceptions import ParseError
 # Create your views here.
 
 
@@ -20,9 +28,17 @@ from rest_framework.generics import (
 class PostCreateAPIView(CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostCreateUpdateSerializer
+    permission_classes = [IsAuthenticated]
     def perform_create(self, serializer):
-        print(self.request.data)
-        serializer.save(user = self.request.user)
+        tema_name = self.request.data['tema']
+        try:
+            tema_obj = Tema.objects.get(tema_name=tema_name)
+        except:
+            raise ParseError('wrong tema name: '+tema_name)
+
+        print('out of tryexcept')
+
+        serializer.save(user = self.request.user, tema=tema_obj)
 
 '''LIST VIEW'''
 class PostListAPIView(ListAPIView):
@@ -40,6 +56,7 @@ class PostUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostCreateUpdateSerializer
     lookup_field = 'slug'
+    permission_classes = [IsOwnerOrReadOnly]
     def perform_update(self, serializer):
         serializer.save(user = self.request.user)
 
@@ -48,4 +65,5 @@ class PostDeleteAPIView(DestroyAPIView):
     lookup_field = 'slug'
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 

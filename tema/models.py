@@ -9,7 +9,7 @@ class Tema(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')
-    tema_name = models.CharField('TEMA', max_length=50)
+    tema_name = models.CharField('TEMA', max_length=25)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
     order_num = models.IntegerField()
