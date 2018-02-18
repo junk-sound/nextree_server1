@@ -10,9 +10,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'testdb1',
-        'USER': 'testuser',
-        'PASSWORD': 'testpw',
+        'NAME': 'testdb',
+        'USER': 'junksound',
+        'PASSWORD': 'wekimeki',
         'HOST': 'localhost',
 	},
 }
