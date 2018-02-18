@@ -42,12 +42,12 @@ class PostCreateAPIView(CreateAPIView):
 
 '''LIST VIEW'''
 class PostListAPIView(ListAPIView):
-    queryset = Post.objects.all().order_by('-modify_date')
+    queryset = Post.objects.all()
     serializer_class = PostListSerializer
 
 '''DETAIL VIEW'''
 class PostDetailAPIView(RetrieveAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-modify_date')
     serializer_class = PostDetailSerializer
     lookup_field = 'slug'
 

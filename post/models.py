@@ -18,6 +18,9 @@ class Post(models.Model):
     # tag = tag
     # is_read = is_read
 
+    class Meta:
+        ordering = ['-modify_date']
+
     def __str__(self):
         return self.title
 
