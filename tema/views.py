@@ -42,26 +42,16 @@ class TemaCreateAPIView(CreateAPIView):
 
 
 class TemaListAPIView(ListAPIView):
-    queryset = Tema.objects.all().order_by('post__modify_date','tema_name').distinct('post__modify_date','tema_name')
+    # queryset = Tema.objects.all().order_by('-post__modify_date')
     serializer_class = TemaListSerializer
 
-    # def get_queryset(self):
-    #     print('get_queryset1')
-    #     queryset_list = Tema.objects.all().order_by('modify_date')
-    #     print('get_queryset2')
-    #     for query in queryset_list:
-    #         print(query)
-    #         try:
-    #             print(query.latest_post_date)
-    #             print('good')
-    #             print(query)
-    #
-    #
-    #         except:
-    #             print('bad')
-    #             print(query)
-    #
-    #     return queryset_list
+    def get_queryset(self):
+        queryset_unarranged = Tema.objects.all().order_by('-post__modify_date')
+        queryset_list = []
+        for query in queryset_unarranged:
+            if query not in queryset_list:
+                queryset_list.append(query)
+        return queryset_list
 
 
 '''DETAIL VIEW'''

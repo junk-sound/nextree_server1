@@ -81,7 +81,7 @@ class TemaListSerializer(ModelSerializer):
             'tema_name',
             # 'order_num',
             'detail_url',
-		'modify_date',
+		    'modify_date',
             # 'latest_post_date',
         ]
 
