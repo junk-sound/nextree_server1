@@ -74,14 +74,24 @@ class TemaListSerializer(ModelSerializer):
         view_name='tema:detail',
         lookup_field='slug'
     )
-
+    # latest_post_date = SerializerMethodField()
     class Meta:
         model = Tema
         fields = [
             'tema_name',
             # 'order_num',
             'detail_url',
+            # 'latest_post_date',
         ]
+
+    # def get_latest_post_date(self, obj):
+    #     print('get_latest_post_date')
+    #     if len(obj.post_set.all()) != 0:
+    #         latest_date = obj.post_set.all().order_by('-modify_date')[0].modify_date
+    #     else:
+    #         latest_date = None
+    #     return latest_date
+
 
 
 
