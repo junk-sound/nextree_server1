@@ -82,3 +82,20 @@ class PostCreateUpdateSerializer(ModelSerializer):
 
         ]
 
+
+class MyWriteSerializer(ModelSerializer):
+    user = SerializerMethodField()
+    class Meta:
+        model = Post
+        fields = [
+            'title',
+            'user',
+            'description',
+            'url',
+            'create_date',
+            'modify_date',
+            'published_date',
+        ]
+    def get_user(self, obj):
+        return obj.user.fullname
+

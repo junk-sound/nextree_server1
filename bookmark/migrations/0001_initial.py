@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name='Bookmark',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('slug', models.SlugField(allow_unicode=True, help_text='one word for title alias.', unique=True, verbose_name='SLUG')),
@@ -24,13 +24,14 @@ class Migration(migrations.Migration):
                 ('url', models.URLField(verbose_name='url')),
                 ('description', models.CharField(help_text='simple description text', max_length=200, verbose_name='DESCRIPTION')),
                 ('create_date', models.DateTimeField(auto_now_add=True)),
-                ('modify_date', models.DateTimeField(auto_now=True)),
-                ('published_date', models.DateField(default=None, null=True)),
+                ('post_modify_date', models.DateField()),
+                ('post_published_date', models.DateTimeField(default=None, null=True)),
                 ('tema', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tema.Tema')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user', to=settings.AUTH_USER_MODEL)),
+                ('writer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='writer', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'ordering': ['-modify_date'],
+                'ordering': ['-create_date'],
             },
         ),
     ]

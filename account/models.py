@@ -1,6 +1,5 @@
 from django.db import models
 # Create your models here.
-
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -8,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
+from django.utils.text import slugify
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -57,4 +57,5 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     def __str__(self):
         return str(self.th)+'기 '+self.fullname
+
 

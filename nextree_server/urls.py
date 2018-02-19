@@ -27,6 +27,7 @@ urlpatterns = [
     path('topic/',include('topic.urls')),
     path('tema/',include('tema.urls')),
     path('post/',include('post.urls')),
+    # path('bookmark/', include('bookmark.urls')),
 
     path('api/auth/token/', obtain_jwt_token),
 ]

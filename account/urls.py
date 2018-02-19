@@ -4,7 +4,13 @@ from account.views import (
     UserLoginAPIView,
     UserListAPIView,
     UserUpdateAPIView,
-    UserDeleteAPIView
+    UserDeleteAPIView,
+    MyWritePostAPIView,
+)
+from bookmark.views import (
+    BookmarkCreateAPIView,
+    BookmarkListAPIView,
+    BookmarkDeleteAPIView,
 )
 app_name = 'account'
 urlpatterns = [
@@ -17,5 +23,13 @@ urlpatterns = [
     # example url: /account/login/
     path('login/', UserLoginAPIView.as_view(), name = 'login'),
     # example url: /account/delete/<email>/
-    path('delete/<str:email>/', UserDeleteAPIView.as_view(), name = 'delete')
+    path('delete/<str:email>/', UserDeleteAPIView.as_view(), name = 'delete'),
+    # example url: /account/mywrite/
+    path('mywrite/', MyWritePostAPIView.as_view(), name ='mywrite'),
+    # example url: /account/bookmark/create/
+    path('bookmark/create/', BookmarkCreateAPIView.as_view(), name = 'bookmark_create'),
+    # example url: /account/bookmark/list/
+    path('bookmark/list/', BookmarkListAPIView.as_view(), name = 'bookmark_list'),
+    # example url: /account/bookmark/delete/<slug>/
+    path('bookmark/delete/<slug:slug>/', BookmarkDeleteAPIView.as_view(), name = 'bookmark_delete'),
 ]

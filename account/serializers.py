@@ -1,7 +1,6 @@
 from rest_framework.serializers import (ModelSerializer,
                                         CharField,
                                         ValidationError,)
-# from django.contrib.auth.models import User
 from account.models import User
 from django.db.models import Q
 
@@ -187,3 +186,4 @@ class UserDeleteSerializer(ModelSerializer):
         fields = [
             'email',
         ]
+
