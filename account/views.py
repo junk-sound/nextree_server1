@@ -94,7 +94,6 @@ class UserDeleteAPIView(DestroyAPIView):
     serializer_class = UserDeleteSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-
 class MyWritePostAPIView(ListAPIView):
     serializer_class = MyWriteSerializer
 

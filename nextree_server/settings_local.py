@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'topic.apps.TopicConfig',
     'bookmark.apps.BookmarkConfig',
     'history.apps.HistoryConfig',
+    'search.apps.SearchConfig',
     'rest_framework',
     'rest_framework.authtoken',
 ]

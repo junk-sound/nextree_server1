@@ -26,7 +26,7 @@ class PostListSerializer(ModelSerializer):
             'detail_url',
         ]
     def get_user(self, obj):
-        return str(obj.user.username)
+        return obj.user.fullname
 
     def get_tema(self, obj):
         return str(obj.tema)
@@ -39,16 +39,14 @@ class PostDetailSerializer(ModelSerializer):
         fields = [
             'tema',
             'title',
-            'slug',
             'user',
             'description',
             'url',
-            'content',
             'create_date',
             'modify_date',
         ]
     def get_user(self, obj):
-        return str(obj.user.username)
+        return obj.user.fullname
 
     def get_tema(self, obj):
         return str(obj.tema.tema_name)
@@ -79,7 +77,6 @@ class PostCreateUpdateSerializer(ModelSerializer):
             'url',
             'description',
             'published_date',
-
         ]
 
 
