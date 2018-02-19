@@ -5,10 +5,10 @@ from django.utils.text import slugify
 # Create your models here.
 
 
-class Bookmark(models.Model):
+class History(models.Model):
     # hyper_link = hyper_link
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmark_user')
-    writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmark_writer')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='history_user')
+    writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='history_writer')
     tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')
     title = models.CharField('TITLE', max_length=80)
@@ -26,4 +26,4 @@ class Bookmark(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.user.username+'-'+self.title, allow_unicode=True)
-        super(Bookmark, self).save(*args, **kwargs)
+        super(History, self).save(*args, **kwargs)
