@@ -36,9 +36,8 @@ class PostCreateAPIView(CreateAPIView):
         except:
             raise ParseError('wrong tema name: '+tema_name)
 
-
-
-        serializer.save(user = self.request.user, tema=tema_obj)
+        topic_obj = tema_obj.topic
+        serializer.save(user = self.request.user, tema=tema_obj, topic=topic_obj)
 
 '''LIST VIEW'''
 class PostListAPIView(ListAPIView):

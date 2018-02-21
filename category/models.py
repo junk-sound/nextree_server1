@@ -10,6 +10,9 @@ class Category(models.Model):
     modify_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True,help_text='one word for title alias.')
 
+    class Meta:
+        ordering = ['category_name']
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.category_name, allow_unicode=True)
@@ -17,3 +20,4 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
+

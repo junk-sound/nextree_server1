@@ -37,7 +37,7 @@ class CategoryCreateAPIView(CreateAPIView):
 '''LIST VIEW'''
 
 class CategoryListAPIView(ListAPIView):
-    queryset = Category.objects.all().order_by('-modify_date')
+    queryset = Category.objects.all().order_by('category_name')
     serializer_class = CategoryListSerializer
 
 '''DETAIL VIEW'''
