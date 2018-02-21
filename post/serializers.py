@@ -72,8 +72,8 @@ class PostCreateUpdateSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = [
-            'tema',
             'title',
+            'tema',
             'url',
             'description',
             'published_date',

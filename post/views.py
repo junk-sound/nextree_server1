@@ -36,7 +36,7 @@ class PostCreateAPIView(CreateAPIView):
         except:
             raise ParseError('wrong tema name: '+tema_name)
 
-        print('out of tryexcept')
+
 
         serializer.save(user = self.request.user, tema=tema_obj)
 
@@ -44,6 +44,7 @@ class PostCreateAPIView(CreateAPIView):
 class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListSerializer
+
 
 '''DETAIL VIEW'''
 class PostDetailAPIView(RetrieveAPIView):
@@ -57,8 +58,14 @@ class PostUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = PostCreateUpdateSerializer
     lookup_field = 'slug'
     permission_classes = [IsOwnerOrReadOnly]
+
     def perform_update(self, serializer):
-        serializer.save(user = self.request.user)
+        tema_name = self.request.data['tema']
+        try:
+            tema_obj = Tema.objects.get(tema_name=tema_name)
+        except:
+            raise ParseError('wrong tema namev' + tema_name)
+        serializer.save(user=self.request.user, tema=tema_obj)
 
 '''DELETE VIEW'''
 class PostDeleteAPIView(DestroyAPIView):

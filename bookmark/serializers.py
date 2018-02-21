@@ -1,5 +1,6 @@
 from rest_framework.serializers import (
     ModelSerializer,
+    SerializerMethodField,
 )
 from bookmark.models import Bookmark
 from post.models import Post
@@ -39,6 +40,7 @@ class BookmarkCreateSerializer(ModelSerializer):
         return validated_data
 
 class BookmarkListSerializer(ModelSerializer):
+    writer = SerializerMethodField()
     class Meta:
         model = Bookmark
         fields = [
@@ -49,4 +51,6 @@ class BookmarkListSerializer(ModelSerializer):
             'post_modify_date',
             'post_published_date',
         ]
+    def get_writer(self, obj):
+        return obj.writer.fullname
 
