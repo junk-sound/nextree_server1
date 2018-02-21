@@ -50,13 +50,13 @@ class PostListAPIView(ListAPIView):
 class PostDetailAPIView(RetrieveAPIView):
     queryset = Post.objects.all().order_by('-modify_date')
     serializer_class = PostDetailSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
 
 '''UPDATE VIEW'''
 class PostUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostCreateUpdateSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     permission_classes = [IsOwnerOrReadOnly]
 
     def perform_update(self, serializer):
@@ -69,7 +69,7 @@ class PostUpdateAPIView(RetrieveUpdateAPIView):
 
 '''DELETE VIEW'''
 class PostDeleteAPIView(DestroyAPIView):
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]

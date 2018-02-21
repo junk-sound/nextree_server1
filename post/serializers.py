@@ -11,7 +11,15 @@ class PostListSerializer(ModelSerializer):
     tema = SerializerMethodField()
     detail_url = HyperlinkedIdentityField(
         view_name='post:detail',
-        lookup_field='slug'
+        lookup_field='pk'
+    )
+    update = HyperlinkedIdentityField(
+        view_name='post:update',
+        lookup_field='pk'
+    )
+    delete = HyperlinkedIdentityField(
+        view_name='post:delete',
+        lookup_field='pk'
     )
     class Meta:
         model = Post
@@ -24,6 +32,8 @@ class PostListSerializer(ModelSerializer):
             'create_date',
             'modify_date',
             'detail_url',
+            'update',
+            'delete',
         ]
     def get_user(self, obj):
         return obj.user.fullname
@@ -56,6 +66,7 @@ class PostTemaSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = [
+            'id',
             'title',
             'user',
             'description',

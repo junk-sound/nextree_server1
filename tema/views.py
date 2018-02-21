@@ -60,7 +60,7 @@ class TemaListAPIView(ListAPIView):
 class TemaDetailAPIView(RetrieveAPIView):
     queryset = Tema.objects.all()
     serializer_class = TemaDetailSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
 
 
 '''UPDATE VIEW'''
@@ -69,7 +69,7 @@ class TemaDetailAPIView(RetrieveAPIView):
 class TemaUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Tema.objects.all()
     serializer_class = TemaUpdateSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     permission_classes = [IsOwnerOrReadOnly]
 
     def perform_update(self, serializer):
@@ -82,5 +82,5 @@ class TemaUpdateAPIView(RetrieveUpdateAPIView):
 class TemaDeleteAPIView(DestroyAPIView):
     queryset = Tema.objects.all()
     serializer_class = TemaDetailSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     permission_classes = [IsOwnerOrReadOnly]

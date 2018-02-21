@@ -13,10 +13,10 @@ urlpatterns = [
     # example url: /post/list/
     path('list/', PostListAPIView.as_view(), name = 'list'),
     # example url: /post/list/<slug_name>/
-    path('list/<slug:slug>', PostDetailAPIView.as_view(), name = 'detail'),
+    path('list/<int:pk>/', PostDetailAPIView.as_view(), name = 'detail'),
     # example url: /post/list/<slug_name>/update/
-    path('list/<slug:slug>/update/', PostUpdateAPIView.as_view(), name = 'update'),
+    path('list/<int:pk>/update/', PostUpdateAPIView.as_view(), name = 'update'),
     # example url: /post/list/<slug_name>/delete/
-    path('list/<slug:slug>/delete/', PostDeleteAPIView.as_view(), name = 'delete'),
+    path('list/<int:pk>/delete/', PostDeleteAPIView.as_view(), name = 'delete'),
 
 ]

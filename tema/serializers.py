@@ -72,7 +72,15 @@ class TemaCreateSerializer(ModelSerializer):
 class TemaListSerializer(ModelSerializer):
     detail_url = HyperlinkedIdentityField(
         view_name='tema:detail',
-        lookup_field='slug'
+        lookup_field='pk'
+    )
+    update = HyperlinkedIdentityField(
+        view_name='tema:update',
+        lookup_field='pk'
+    )
+    delete = HyperlinkedIdentityField(
+        view_name='tema:delete',
+        lookup_field='pk'
     )
     # latest_post_date = SerializerMethodField()
     class Meta:
@@ -82,6 +90,8 @@ class TemaListSerializer(ModelSerializer):
             # 'order_num',
             'detail_url',
 		    'modify_date',
+            'update',
+            'delete',
             # 'latest_post_date',
         ]
 

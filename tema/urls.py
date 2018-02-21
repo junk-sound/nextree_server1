@@ -6,7 +6,11 @@ from tema.views import (
     TemaDetailAPIView,
     TemaDeleteAPIView,
 )
+from django.utils.encoding import iri_to_uri
+from django.utils.encoding import uri_to_iri
 app_name = 'tema'
+
+
 
 urlpatterns = [
     # example url: /tema/create/
@@ -14,11 +18,11 @@ urlpatterns = [
     # example url: /tema/list/
     path('list/', TemaListAPIView.as_view(), name = 'list'),
     # example url: /tema/list/<slug_name>/
-    path('list/<slug:slug>', TemaDetailAPIView.as_view(), name = 'detail'),
+    path('list/<int:pk>/', TemaDetailAPIView.as_view(), name = 'detail'),
     # example url: /tema/list/<slug_name>/update/
-    path('list/<slug:slug>/update/', TemaUpdateAPIView.as_view(), name = 'update'),
+    path('list/<int:pk>/update/', TemaUpdateAPIView.as_view(), name = 'update'),
     # example url: /tema/list/<slug_name>/delete/
-    path('list/<slug:slug>/delete/',TemaDeleteAPIView.as_view(), name = 'delete'),
+    path('list/<int:pk>/delete/',TemaDeleteAPIView.as_view(), name = 'delete'),
 
 
     # # example url: /post/list/<slug_name>/<slug_post_name>/
