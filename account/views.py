@@ -10,12 +10,13 @@ from rest_framework.views import APIView
 # from django.contrib.auth.models import User
 from account.models import User
 from post.models import Post
+from category.models import Category
 from account.serializers import (UserDetailSerializer,
                                  UserCreateSerializer,
                                  UserLoginSerializer,
                                  UserUpdateSerializer,
                                  UserDeleteSerializer,)
-from post.serializers import MyWriteSerializer
+from post.serializers import MyWriteSerializer, PostDetailSerializer
 
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -94,10 +95,27 @@ class UserDeleteAPIView(DestroyAPIView):
     serializer_class = UserDeleteSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-class MyWritePostAPIView(ListAPIView):
-    serializer_class = MyWriteSerializer
+# class MyWritePostAPIView(ListAPIView):
+#     serializer_class = MyWriteSerializer
+#
+#     def get_queryset(self):
+#         queryset_list = Post.objects.all().filter(user=self.request.user)
+#         return queryset_list
 
-    def get_queryset(self):
-        queryset_list = Post.objects.all().filter(user=self.request.user)
-        return queryset_list
 
+class MyWritePostAPIView(APIView):
+    def get(self,request,*args,**kwargs):
+        My_Post_All_QS = Post.objects.all().filter(user = request.user)
+        Response_data = {}
+        for category in Category.objects.all():
+            category_name = category.category_name
+            Response_data[category_name] = {}
+            topic_QS = category.topic_set.all()
+            for topic_Instance in topic_QS:
+                topic_name = topic_Instance.topic_name
+                My_Post_Per_Topic_QS =My_Post_All_QS.filter(topic=topic_Instance)
+                serializer = PostDetailSerializer(My_Post_Per_Topic_QS, many=True)
+                result_data = serializer.data
+                Response_data[category_name][topic_name] = result_data
+
+        return Response(Response_data, status=HTTP_200_OK)

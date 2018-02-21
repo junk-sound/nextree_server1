@@ -17,6 +17,7 @@ class BookmarkCreateSerializer(ModelSerializer):
         post_obj = Post.objects.get(title=validated_data['title'])
         user = validated_data['user']
         tema = post_obj.tema
+        topic = tema.topic
         slug = post_obj.slug
         title = post_obj.title
         url = post_obj.url
@@ -28,6 +29,7 @@ class BookmarkCreateSerializer(ModelSerializer):
         bookmark_obj = Bookmark(
             user = user,
             writer = writer,
+            topic= topic,
             tema = tema,
             slug = slug,
             title = title,
