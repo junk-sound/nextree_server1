@@ -99,4 +99,5 @@ class TopicCategorySerializer(ModelSerializer):
         model = Topic
         fields = [
             'topic_name',
+            'id',
         ]
