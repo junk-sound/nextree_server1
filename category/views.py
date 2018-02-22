@@ -51,7 +51,7 @@ class CategoryDetailAPIView(RetrieveAPIView):
 class CategoryUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryUpdateSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     permission_classes = [IsOwnerOrReadOnly]
 
     def perform_update(self, serializer):
@@ -60,5 +60,5 @@ class CategoryUpdateAPIView(RetrieveUpdateAPIView):
 class CategoryDeleteAPIView(DestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryDetailSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     permission_classes = [IsOwnerOrReadOnly]

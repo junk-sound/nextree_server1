@@ -67,7 +67,7 @@ class TopicListAPIView(ListAPIView):
 class TopicDetailAPIView(RetrieveAPIView):
     queryset = Topic.objects.all()
     # serializer_class = TopicDetailSerializer()
-    lookup_field = 'slug'
+    lookup_field = 'pk'
     def get_serializer_class(self):
         print('check now2')
         print(self.request.query_params)
@@ -82,7 +82,7 @@ class TopicDetailAPIView(RetrieveAPIView):
 class TopicUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicCreateUpdateSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'
 
 
 '''DELETE VIEW'''
@@ -91,4 +91,4 @@ class TopicUpdateAPIView(RetrieveUpdateAPIView):
 class TopicDeleteAPIView(DestroyAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicDetailSerializer
-    lookup_field = 'slug'
+    lookup_field = 'pk'

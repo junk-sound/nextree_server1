@@ -13,11 +13,11 @@ urlpatterns = [
     # example url: /topic/list/
     path('list/', TopicListAPIView.as_view(), name = 'list'),
     # example url: /topic/list/<slug_name>/
-    path('list/<slug:slug>', TopicDetailAPIView.as_view(), name = 'detail'),
+    path('list/<int:pk>/', TopicDetailAPIView.as_view(), name = 'detail'),
     # example url: /topic/list/<slug_name>/update/
-    path('list/<slug:slug>/update/', TopicUpdateAPIView.as_view(), name = 'update'),
+    path('list/<int:pk>/update/', TopicUpdateAPIView.as_view(), name = 'update'),
     # example url: /topic/list/<slug_name>/delete/
-    path('list/<slug:slug>/delete/',TopicDeleteAPIView.as_view(), name = 'delete'),
+    path('list/<int:pk>/delete/',TopicDeleteAPIView.as_view(), name = 'delete'),
 
 
     # # example url: /post/list/<slug_name>/<slug_post_name>/

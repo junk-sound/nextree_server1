@@ -157,6 +157,7 @@ class TemaTopicSerializer(ModelSerializer):
         model = Tema
         fields = [
             'tema_name',
+            'id',
             'modify_date',
             'post_count'
         ]

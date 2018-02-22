@@ -29,7 +29,7 @@ class TopicCreateUpdateSerializer(ModelSerializer):
 class TopicListSerializer(ModelSerializer):
     detail_url = HyperlinkedIdentityField(
         view_name='topic:detail',
-        lookup_field='slug'
+        lookup_field='pk'
     )
     tema_list = SerializerMethodField()
     tema_count = SerializerMethodField()
