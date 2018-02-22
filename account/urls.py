@@ -14,9 +14,10 @@ from bookmark.views import (
 )
 
 from history.views import (
-    HistoryCreateAPIView,
+    # HistoryCreateAPIView,
     HistoryListAPIView,
     HistoryDeleteAPIView,
+    HistoryCreateUpdateAPIView,
 )
 
 app_name = 'account'
@@ -39,8 +40,10 @@ urlpatterns = [
     path('bookmark/list/', BookmarkListAPIView.as_view(), name = 'bookmark_list'),
     # example url: /account/bookmark/delete/<slug>/
     path('bookmark/delete/<slug:slug>/', BookmarkDeleteAPIView.as_view(), name = 'bookmark_delete'),
-    # example url: /account/history/create/
-    path('history/create/', HistoryCreateAPIView.as_view(), name = 'history_create'),
+    # # example url: /account/history/create/
+    # path('history/create/', HistoryCreateAPIView.as_view(), name = 'history_create'),
+    # example url: /account/histroy/createupdate/
+    path('history/createupdate/',HistoryCreateUpdateAPIView.as_view(), name = 'history_createupdate'),
     # example url: /account/history/list/
     path('history/list/', HistoryListAPIView.as_view(), name = 'history_list'),
     # example url: /account/history/delete/<slug>/

@@ -30,7 +30,6 @@ class UserCreateSerializer(ModelSerializer):
         ]
     extra_kwargs = {"password": {"write_only": True}}
     def validate_email(self, value):
-        print('aaaaaaaaaaaaaa')
         email_validate = value
         user_qs = User.objects.filter(email=email_validate)
         if user_qs.exists():

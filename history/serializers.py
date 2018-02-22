@@ -6,6 +6,13 @@ from history.models import History
 from post.models import Post
 
 
+class HistoryCreateUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = History
+        fields = [
+            'title',
+        ]
+
 class HistoryCreateSerializer(ModelSerializer):
 
     class Meta:
