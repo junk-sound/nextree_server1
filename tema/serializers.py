@@ -1,18 +1,19 @@
 from tema.models import Tema
+from topic.models import Topic
 from rest_framework.serializers import (
     ModelSerializer,
     SerializerMethodField,
     HyperlinkedIdentityField,
+    CharField,
 )
 from django.db.models import F
 
 from post.serializers import PostTemaSerializer
-
+from rest_framework.exceptions import ParseError
 
 '''STANDARD SERIALIZER'''
-
-
 class StandardTemaSerializer(ModelSerializer):
+    tema_name = CharField(allow_blank=True)
     class Meta:
         model = Tema
         fields = [
@@ -25,23 +26,42 @@ class StandardTemaSerializer(ModelSerializer):
 
 class TemaCreateSerializer(ModelSerializer):
     standard_tema = StandardTemaSerializer()
+    topic = CharField(allow_blank=True)
 
     class Meta:
         model = Tema
         fields = [
             'tema_name',
+            'topic',
             'standard_tema',
         ]
 
     def create(self, validated_data):
-        print('validated data:', validated_data)
-
         '''
         기준이 되는 객츼의 정보들을 파싱합니다.
         '''
-        standard_tema_name = validated_data['standard_tema']['tema_name']
-        standard_obj = Tema.objects.get(tema_name=standard_tema_name)
-        standard_ordernum = standard_obj.order_num
+        if validated_data['topic']:
+            topic_name = validated_data['topic']
+            try:
+                topic_obj = Topic.objects.get(topic_name=topic_name)
+                standard_ordernum = 0
+                ordernum = 1
+            except:
+                raise ParseError('There is no topic that you wrote')
+
+        else:
+            if validated_data['standard_tema']['tema_name']:
+                standard_tema_name = validated_data['standard_tema']['tema_name']
+                try:
+                    standard_obj = Tema.objects.get(tema_name=standard_tema_name)
+                    standard_ordernum = standard_obj.order_num
+                    ordernum = standard_ordernum + 1
+                    topic_obj = standard_obj.topic
+                except:
+                    raise ParseError('There is no standard tema that you wrrote')
+            else:
+                raise ParseError('You should type standard tema name')
+
 
         '''
         기존 객체들의 order_num을 update해줍니다.
@@ -53,12 +73,11 @@ class TemaCreateSerializer(ModelSerializer):
         '''
         tema_name = validated_data['tema_name']
         user = validated_data['user']
-        topic = standard_obj.topic
-        ordernum = standard_ordernum + 1
+
         Tema_obj = Tema(
             user=user,
             tema_name=tema_name,
-            topic=topic,
+            topic=topic_obj,
             order_num=ordernum
         )
         Tema_obj.save()
