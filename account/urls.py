@@ -39,7 +39,7 @@ urlpatterns = [
     # example url: /account/bookmark/list/
     path('bookmark/list/', BookmarkListAPIView.as_view(), name = 'bookmark_list'),
     # example url: /account/bookmark/delete/<slug>/
-    path('bookmark/delete/<slug:slug>/', BookmarkDeleteAPIView.as_view(), name = 'bookmark_delete'),
+    path('bookmark/delete/<int:pk>/', BookmarkDeleteAPIView.as_view(), name = 'bookmark_delete'),
     # # example url: /account/history/create/
     # path('history/create/', HistoryCreateAPIView.as_view(), name = 'history_create'),
     # example url: /account/histroy/createupdate/
@@ -47,5 +47,5 @@ urlpatterns = [
     # example url: /account/history/list/
     path('history/list/', HistoryListAPIView.as_view(), name = 'history_list'),
     # example url: /account/history/delete/<slug>/
-    path('history/delete/<slug:slug>/', HistoryDeleteAPIView.as_view(), name = 'history_delete'),
+    path('history/delete/<int:pk>/', HistoryDeleteAPIView.as_view(), name = 'history_delete'),
 ]

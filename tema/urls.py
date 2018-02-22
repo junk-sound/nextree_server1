@@ -23,8 +23,6 @@ urlpatterns = [
     path('list/<int:pk>/update/', TemaUpdateAPIView.as_view(), name = 'update'),
     # example url: /tema/list/<slug_name>/delete/
     path('list/<int:pk>/delete/',TemaDeleteAPIView.as_view(), name = 'delete'),
-
-
     # # example url: /post/list/<slug_name>/<slug_post_name>/
     # path('list/<slug:slug>/<slug:slug>', TemaDetailPostAPIView.as_view(), name = 'detail_post'),
 ]

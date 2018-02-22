@@ -16,11 +16,21 @@ from history.serializers import (HistoryCreateSerializer,
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+)
+from account.permissions import IsOwnerOrReadOnly
+
 # Create your views here.
 
 
 class HistoryCreateUpdateAPIView(APIView):
     serializer_class = HistoryCreateUpdateSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
     def post(self, request, *args, **kwargs):
         title = request.data['title']
         try:
@@ -71,12 +81,14 @@ class HistoryCreateUpdateAPIView(APIView):
 
 class HistoryListAPIView(ListAPIView):
     serializer_class = HistoryListSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset_list = History.objects.all().filter(user=self.request.user)
         return queryset_list
 
 class HistoryDeleteAPIView(DestroyAPIView):
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = History.objects.all()
     serializer_class = HistoryListSerializer
     lookup_field = 'slug'

@@ -12,12 +12,22 @@ from bookmark.serializers import (BookmarkCreateSerializer,
 
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+)
+
+from account.permissions import IsOwnerOrReadOnly
+
 # Create your views here.
 
 
 class BookmarkCreateAPIView(CreateAPIView):
     serializer_class = BookmarkCreateSerializer
     queryset = Bookmark.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
@@ -33,9 +43,11 @@ class BookmarkDeleteAPIView(DestroyAPIView):
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkListSerializer
     lookup_field = 'slug'
+    permission_classes = [IsOwnerOrReadOnly]
 
 
 class BookmarkListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         My_Bookmark_All_QS = Bookmark.objects.all().filter(user=request.user)

@@ -83,6 +83,7 @@ class TopicUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicCreateUpdateSerializer
     lookup_field = 'pk'
+    permission_classes = [IsAdminUser]
 
 
 '''DELETE VIEW'''

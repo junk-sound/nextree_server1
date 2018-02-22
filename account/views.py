@@ -104,6 +104,7 @@ class UserDeleteAPIView(DestroyAPIView):
 
 
 class MyWritePostAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self,request,*args,**kwargs):
         My_Post_All_QS = Post.objects.all().filter(user = request.user)
         Response_data = {}
@@ -117,5 +118,4 @@ class MyWritePostAPIView(APIView):
                 serializer = PostDetailSerializer(My_Post_Per_Topic_QS, many=True)
                 result_data = serializer.data
                 Response_data[category_name][topic_name] = result_data
-
         return Response(Response_data, status=HTTP_200_OK)
