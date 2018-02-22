@@ -30,7 +30,7 @@ from .permissions import IsOwnerOrReadOnly
 class TemaCreateAPIView(CreateAPIView):
     # queryset = Tema.objects.all()
     serializer_class = TemaCreateSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         print('checking now1')
