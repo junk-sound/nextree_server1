@@ -87,6 +87,7 @@ class TemaListSerializer(ModelSerializer):
         model = Tema
         fields = [
             'tema_name',
+            'id',
             # 'order_num',
             'detail_url',
 		    'modify_date',
