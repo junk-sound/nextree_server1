@@ -47,7 +47,7 @@ class TemaListAPIView(ListAPIView):
 
     def get_queryset(self):
         queryset_unarranged = Tema.objects.all().order_by('-post__modify_date', '-create_date')
-		queryset_list = []
+        queryset_list = []
         for query in queryset_unarranged:
             if query not in queryset_list:
                 queryset_list.append(query)
