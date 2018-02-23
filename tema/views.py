@@ -46,26 +46,17 @@ class TemaListAPIView(ListAPIView):
     serializer_class = TemaListSerializer
 
     def get_queryset(self):
-        queryset_unarranged = Tema.objects.all().order_by('-post__modify_date', '-modify_date')
         havepost_QS = Tema.objects.all().filter(post__isnull=False).order_by('-post__modify_date')
         nohavepost_QS = Tema.objects.all().filter(post__isnull=True).order_by('-modify_date')
-
         havepost_list = []
         nohavepost_list = []
-
         for query_hp in havepost_QS:
             if query_hp not in havepost_list:
                 havepost_list.append(query_hp)
-
         for query_nhp in nohavepost_QS:
             if query_nhp not in nohavepost_list:
                 nohavepost_list.append(query_nhp)
-
         havepost_list.extend(nohavepost_list)
-        queryset_list = []
-        for query in queryset_unarranged:
-            if query not in queryset_list:
-                queryset_list.append(query)
         return havepost_list
 
 
